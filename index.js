@@ -65,10 +65,22 @@ ${license}
 
             }
             const parseCredits = res => {
-
+                axios.get(res.contributors_url)
+                    .then(contribs => {
+                        let creds = "";
+                        contribs.forEach(user => {
+                            creds += `![${user.login} avatar](${user.avatar_url}) [${user.login}](${user.url}) \n`;
+                        });
+                    })
             }
             const parseLicense = res => {
-
+                let lic = res.license;
+                if (lic === null) {
+                    return "This project is unlicensed."
+                } else {
+                    return `This project is licensed with ${lic.name} 
+                    for full details check [License Link](${lic.url})`
+                }
             }
             installation = writeInstallation();
             usage = writeUsage();
