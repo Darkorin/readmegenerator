@@ -17,78 +17,89 @@ inquirer.prompt([{
     let faq;
     let credits;
     let license;
-    const readme = 
+
+    axios.get(`https://api.github.com/repos/${username}/${repo}`)
+        .then(res => {
+            const writeReadMe = () => {
+                // Forces it to wait until all the various functions are finished before writed the readme file.
+                console.log(installation != undefined && usage != undefined && tests != undefined && faq != undefined && credits != undefined && license != undefined)
+                if(installation != undefined && usage != undefined && tests != undefined && faq != undefined && credits != undefined && license != undefined)
+                {
+                    const readme =
 `
 # ${repo}
 # Author: ${username}
 ![size](https://img.shields.io/github/repo-size/${username}/${repo})
-
-#Table of Contents:
+        
+# Table of Contents:
 * [Installation](#Installation)
 * [Usage](#Usage)
 * [Tests](#Tests)
 * [FAQ](#FAQ)
-* [Credits](#Credits)
+* [Credits](#Contributors)
 * [License](#License)
-
+        
 ## Installation
 ${installation}
-
+        
 ## Usage
 ${usage}
-
+        
 ## Tests
 ${tests}
-
+        
 ## FAQ
 ${faq}
-
-## Credits
+        
+## Contributors
 ${credits}
-
+        
 ## License
 ${license}
 `
-
-    axios.get(`https://api.github.com/repos/${username}/${repo}`)
-        .then(res => {
+                    fs.writeFile(`${repo} README.md`, readme.trim(), err => { if (err) console.log(err) });
+                }
+            };
             const writeInstallation = () => {
-
+                installation = "test";
+                writeReadMe();
             }
             const writeUsage = () => {
-
+                usage = "test";
+                writeReadMe();
             }
             const writeTests = () => {
-
+                tests = "test";
+                writeReadMe();
             }
             const writeFAQ = () => {
-
+                faq = "test";
+                writeReadMe();
             }
-            const parseCredits = res => {
-                axios.get(res.contributors_url)
+            const parseCredits = contribUrl => {
+                axios.get(contribUrl)
                     .then(contribs => {
                         let creds = "";
-                        contribs.forEach(user => {
-                            creds += `![${user.login} avatar](${user.avatar_url}) [${user.login}](${user.url}) \n`;
+                        contribs.data.forEach(user => {
+                            creds += `[${user.login}](${user.url})\n`;
                         });
+                        credits = creds;
+                        writeReadMe();
                     })
             }
-            const parseLicense = res => {
-                let lic = res.license;
+            const parseLicense = lic => {
                 if (lic === null) {
-                    return "This project is unlicensed."
+                    license = "This project is unlicensed."
                 } else {
-                    return `This project is licensed with ${lic.name} 
-                    for full details check [License Link](${lic.url})`
+                    license = `This project is licensed with [${lic.name}](${lic.url})`
                 }
+                writeReadMe();
             }
-            installation = writeInstallation();
-            usage = writeUsage();
-            test = writeTests();
-            faq = writeFAQ();
-            credits = parseCredits(res);
-            license = parseLicense(res);
+            writeInstallation();
+            writeUsage();
+            writeTests();
+            writeFAQ();
+            parseCredits(res.data.contributors_url);
+            parseLicense(res.data.license);
         });
-
-    fs.writeFile(`${repo} README.md`, readme.trim(), err => {if (err) console.log(err)});
 })
