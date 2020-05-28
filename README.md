@@ -1,5 +1,5 @@
 # ReadMeGenerator
-# Author: Darkorin
+## Author: Darkorin
 
 This project generates README.md files for your repo.
 
@@ -23,7 +23,8 @@ Used for generating a simple README file for any github repo.
 I used it to build the README that you are reading right now. So you can use this as a basic formatting reference.
         
 ## FAQ
-* Q: Can I insert images into this readme? <br>* A: Yes but you'll have to type them where you want them in markdown format.
+* Q: Can I insert images into this readme?
+    * A: Yes but you'll have to type them where you want them in markdown format.
         
 ## Contributors
 [Darkorin](https://api.github.com/users/Darkorin)
