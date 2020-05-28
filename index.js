@@ -53,7 +53,6 @@ ${tests}
         
 ## FAQ
 ${faq}
-        
 ## Contributors
 ${credits}
         
@@ -105,13 +104,37 @@ ${license}
                 });
             }
             const writeFAQ = () => {
-                inquirer.prompt({
-                    message: "Write a FAQ(Frequently Asked Questions) for your project. (If you want it to look good format it like this: * Q: Question <br>* A: Answer)",
-                    name: "faqs"
-                }).then(({faqs}) => {
-                    faq = faqs;
-                    parseCredits(res.data.contributors_url);
-                })
+                const askQuestion = () => {
+                    inquirer.prompt({
+                        message:  "Enter a question",
+                        name: "question"
+                    }).then(({question}) => {
+                        inquirer.prompt({
+                            message: "Enter an answer",
+                            name: "answer"
+                        }).then(({answer}) => {
+                            faqs += 
+`* Q: ${question}
+    * A: ${answer}
+`;
+                            inquirer.prompt({
+                                type: "confirm",
+                                message: "Add another question?",
+                                name: "another"
+                            }).then(({another}) => {
+                                if (another) {
+                                    askQuestion();
+                                } else {
+                                    faq = faqs;
+                                    parseCredits(res.data.contributors_url);
+                                }
+                            })
+                        })  
+                    })
+                }
+                let faqs = "";
+                console.log("Write a FAQ(Frequently Asked Questions) for your project.");
+                askQuestion();
             }
             const parseCredits = contribUrl => {
                 axios.get(contribUrl)
