@@ -28,7 +28,7 @@ inquirer.prompt([{
                     const readme =
 `
 # ${repo}
-# Author: ${username}
+#### Author: ${username}
 
 ${description}
 
