@@ -106,7 +106,7 @@ ${license}
             }
             const writeFAQ = () => {
                 inquirer.prompt({
-                    message: "Write a FAQ(Frequently Asked Questions) for your project. (If you want it to look good format it like this: * Q: Question * A: Answer)",
+                    message: "Write a FAQ(Frequently Asked Questions) for your project. (If you want it to look good format it like this: * Q: Question <br>* A: Answer)",
                     name: "faqs"
                 }).then(({faqs}) => {
                     faq = faqs;
