@@ -27,7 +27,7 @@ I used it to build the README that you are reading right now. So you can use thi
     * A: Yes but you'll have to type them where you want them in markdown format.
         
 ## Contributors
-[Darkorin](https://github.com/users/Darkorin)<img src=>
+<img src="https://avatars0.githubusercontent.com/u/61299620?v=4" width="30" style="border-radius: 15px"> [Darkorin](https://github.com/users/Darkorin)
 
         
 ## License
