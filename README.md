@@ -1,5 +1,5 @@
 # ReadMeGenerator
-## Author: Darkorin
+#### Author: Darkorin
 
 This project generates README.md files for your repo.
 
