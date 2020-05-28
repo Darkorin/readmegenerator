@@ -141,7 +141,7 @@ ${license}
                     .then(contribs => {
                         let creds = "";
                         contribs.data.forEach(user => {
-                            creds += `[${user.login}](${user.url})\n`;
+                            creds += `<img src="${user.avatar_url}" width="30" style="border-radius: 15px"> [${user.login}](${user.html_url})<br>`;
                         });
                         credits = creds;
                         parseLicense(res.data.license);
